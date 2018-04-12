@@ -1,0 +1,61 @@
+<span>Number of rows</span>
+<input 
+	[(ngModel)]="numCols" 
+	(keyup)="onSearchTyped($event)" 
+	pattern="[0-9]"
+/>
+
+<div *ngIf="!isValid">Your search must only contain numbers.</div>
+
+<table>
+	
+	<tr id="header" class="headers">
+		<th>Action</th>
+		<th 
+			*ngFor="let header of tableHeaders "
+		>
+			{{header}}
+		</th>
+	</tr>
+
+	<tr *ngFor="let row of dataRows[currentIndex]" class="rows">
+		<td><button (click)="SubmitAction( row.id, row.status )">Submit</button></td>
+		<td class="cell">{{row.name}}</td>
+		<td class="cell">{{row.phone}}</td>
+		<td class="cell">{{row.email}}</td>
+		<td class="cell">{{row.company}}</td>
+		<td class="cell">{{row.date_entry}}</td>
+		<td class="cell">{{row.org_num}}</td>
+		<td class="cell">{{row.address_1}}</td>
+		<td class="cell">{{row.city}}</td>
+		<td class="cell">{{row.zip}}</td>
+		<td class="cell">{{row.geo}}</td>
+		<td class="cell">{{row.pan}}</td>
+		<td class="cell">{{row.pin}}</td>
+		<td class="cell">{{row.id}}</td>
+		<td class="cell">{{row.status}}</td>
+		<td class="cell">{{row.fee}}</td>
+		<td class="cell">{{row.guid}}</td>
+		<td class="cell">{{row.date_exit}}</td>
+		<td class="cell">{{row.date_first}}</td>
+		<td class="cell">{{row.date_recent}}</td>
+		<td class="cell">{{row.url}}</td>
+	</tr>
+</table>
+<!-- TABLE CONTROLLER -->
+<div class="table-controls">
+	<span (click)="tableControl('first')">{{tableController.first}}</span>
+	<span (click)="tableControl('back')">{{tableController.back}}</span>
+	<span>
+		<span 
+			class="pages"
+			*ngFor="let page of dataRows; let index=index; "
+			(click)="tableControl(index+1)"
+			[ngClass]="(currentIndex==index+1)?'active-page':'non-active-page'"
+		>
+			{{index+1}}
+		</span>
+	</span>
+	<span (click)="tableControl('next')">{{tableController.next}}</span>
+	<span (click)="tableControl('last')">{{tableController.last}}</span>
+</div>

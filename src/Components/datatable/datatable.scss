@@ -1,0 +1,43 @@
+table{
+	display: block;
+    height: 400px;
+    overflow-y: auto;
+    
+    tr:nth-child(2n){
+    	background: #ddd;
+    }	
+	tr{
+		.cell{
+			white-space:nowrap;
+		}
+		.headers{
+
+		}
+	}
+}
+.table-controls {
+	background: #ddd;
+	position: fixed;
+	display: block;
+	width: 100%;
+	text-align: center;
+	span:hover{
+		color: red;
+	}
+	.pages:hover{
+		color: blue;
+	}
+	.active-page{
+		color:blue;
+	}
+	.non-active-page{
+		color:red;
+	}
+}
+
+.table-controls > *{
+	padding: 5px;
+	cursor: pointer;
+	margin-right: 5px;
+	color: #fff;
+}
