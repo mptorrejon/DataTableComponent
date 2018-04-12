@@ -5,14 +5,14 @@ import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 
 @Component({
-	selector: "datatable",
-	templateUrl: './datatable.html',
-	styleUrls: ['./datatable.scss']
+	selector : 'datatable',
+	templateUrl : './datatable.html',
+	styleUrls : [ './datatable.scss' ]
 })
-export class DataTableComponent{
-	tableHeaders:Array<string>;
+export class DataTableComponent {
+	tableHeaders:Array< string >;
 	tableController:Object;
-	dataRows: any;
+	dataRows:any;
 	numCols:number;
 	isValid:boolean;
 	totalPages:number;
@@ -21,81 +21,81 @@ export class DataTableComponent{
 
 	constructor(
 		private _dtService:DataTableService
-	){
-		console.log("DataTableComponent Loaded");
+	) {
+		console.log('DataTableComponent Loaded');
 		this.currentIndex = 0;
-		this.numCols = 20; //sets default value input 
+		this.numCols = 20;// sets default value input
 		this.isValid = true;
 		this.dataRows = [];
 		this.tableHeaders = TABLE_MODEL.HEADERS;
 		this.tableController = TABLE_MODEL.TABLE_CONTROLLERS;
 		this.totalPages = 0;
-		
-		//will capture input after some debound time so it does not make unnecessary(continuous) ajax calls
+
+		// will capture input after some debound time so it does not make unnecessary(continuous) ajax calls
 		this.searchUpdated.asObservable().debounceTime(1000).subscribe(
-			(d:number)=>{
+			( d:number ) => {
 				console.log(d);
-				//keep data at service level
+				// keep data at service level
 				this._dtService.setNumCols(this.numCols);
 				this.getData();
 			}
 		);
 	}
-	//calls service on component init
-	ngOnInit(){
+	// calls service on component init
+	ngOnInit () {
 		this.searchUpdated.next(this.numCols);
 	}
-	//retrieves value from input on keyup event
-	onSearchTyped(e){
-		let value = e.target.value;
-		if( !isNaN(value) ){
+	// retrieves value from input on keyup event
+	onSearchTyped (e) {
+		const value = e.target.value;
+		if ( !isNaN ( value ) ) {
 			this.isValid = true;
 			this.numCols = e.target.value;
-			this.searchUpdated.next(this.numCols);	
-		}else{
+			this.searchUpdated.next( this.numCols );
+		} else {
 			this.isValid = false;
 		}
 		
 	}
-	//call service to retrieve data paginated on numCols
-	getData(){
-		console.log("Getting "+this._dtService.getNumCols()+" Rows");
+	// call service to retrieve data paginated on numCols
+	getData () {
+		console.log('Getting ' + this._dtService.getNumCols() + ' Rows');
 		this._dtService.getData().subscribe(
-			(d:any)=>{
+			( d:any ) => {
 				this.dataRows = d;
-				console.log(d);
+				// console.log(d);
 			}
 		);
 	}
-	//will perform correct action upon table control
-	tableControl(action){
-		switch(action){
-			case "first":
+	// will perform correct action upon table control
+	tableControl (action) {
+		switch( action ){
+			case 'first':
 				this.currentIndex = 0;
 			break;
 
-			case "back":
-				if(this.currentIndex!=0)
+			case 'back':
+				if( this.currentIndex != 0 )
 					this.currentIndex = this.currentIndex-1;
 			break;
 
-			case "next":
-				if(this.currentIndex != this.dataRows.length)
+			case 'next':
+				if( this.currentIndex+1 != this.dataRows.length )
 					this.currentIndex = this.currentIndex+1;
 			break;
 
-			case "last":
+			case 'last':
 				this.currentIndex = this.dataRows.length;
 			break;
 
 			default:
 				this.currentIndex = action;
-				console.log(this.dataRows[this.currentIndex] );
+				// console.log(this.dataRows[this.currentIndex+1] );
 			break;
 		}
 	}
-	SubmitAction(rowId, rowStatus){
-		this._dtService.SubmitAction(rowId, rowStatus).subscribe( (d:any)=>{
+	SubmitAction ( rowId, rowStatus ) {
+		this._dtService.SubmitAction( rowId, rowStatus ).subscribe( ( d:any )=>{
 			/*
 				do something with response...
 			*/

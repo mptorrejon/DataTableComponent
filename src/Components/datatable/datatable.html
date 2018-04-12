@@ -50,8 +50,8 @@
 		<span 
 			class="pages"
 			*ngFor="let page of dataRows; let index=index; "
-			(click)="tableControl(index+1)"
-			[ngClass]="(currentIndex==index+1)?'active-page':'non-active-page'"
+			(click)="tableControl(index)"
+			[ngClass]="(currentIndex==index)?'active-page':'non-active-page'"
 		>
 			{{index+1}}
 		</span>

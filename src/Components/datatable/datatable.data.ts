@@ -18,13 +18,12 @@ export class DataTableData{
 		}
 	}
 	submitAction(obj){
-		let uri = this._dtPropsSrvc.getSubmitUrl( this.isMock.submit );
+		const uri = this._dtPropsSrvc.getSubmitUrl( this.isMock.submit );
 		return this._http.post(uri, obj);
 	}
 
 	getData(numCols:number){
-		
-		let url = this._dtPropsSrvc.getDataUrl( this.isMock.data );
+		const url = this._dtPropsSrvc.getDataUrl( this.isMock.data );
 		return this._http.get(url).pipe(
 			map( (res:Array<{}>)=>{
 				//paginates fullset and returns a paginated array
